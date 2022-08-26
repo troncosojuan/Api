@@ -37,7 +37,10 @@ public class PeliculaEntity {
 
 
     //generamos relacion con genero
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+    })
     @JoinColumn(name = "genero_id", insertable = false, updatable = false)
     private GeneroEntity genero;
 
