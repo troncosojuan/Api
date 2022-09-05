@@ -13,7 +13,7 @@ public interface PeliculaService {
 
     void delete(Long id);
 
-    PeliculaDTO search(Long id);
+    boolean search(Long id);
 
 
     List<PeliculaDTO> buscarPorFiltros(String nombre, Set<Long> idGenero, String order);

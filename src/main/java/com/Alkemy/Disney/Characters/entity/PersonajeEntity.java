@@ -34,7 +34,7 @@ public class PersonajeEntity {
 
     private String imagen;
     private String nombre;
-    private int edad;
+    private Integer edad;
     private Double peso;
     private String historia;
     private boolean deleted = Boolean.FALSE;

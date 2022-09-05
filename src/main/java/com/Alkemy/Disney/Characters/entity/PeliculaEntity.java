@@ -11,8 +11,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@SQLDelete(sql = "UPDATE pelicula SET deleted = true WHERE id=?")
-@Where(clause = "deleted=false")
+@SQLDelete(sql = "UPDATE pelicula SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 @Getter
 @Setter
 @Table(name = "pelicula")

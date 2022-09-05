@@ -41,7 +41,8 @@ public class PeliculaSpecification {
             }
             query.distinct(true);
 
-            String orderByField = "order";
+
+            String orderByField = "titulo";
             query.orderBy(
                     filtroDTO.isASC() ?
                             criteriaBuilder.asc(root.get(orderByField)) :

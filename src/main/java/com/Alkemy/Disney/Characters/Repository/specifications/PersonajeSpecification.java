@@ -35,7 +35,7 @@ public class PersonajeSpecification {
             }
 
 
-            if (filtrosDTO.getEdad() > 0) {
+            if (filtrosDTO.getEdad() != null && filtrosDTO.getEdad() > 0) {
                 predicates.add(
                         criteriaBuilder.equal(root.get("edad"),
                                 filtrosDTO.getEdad()

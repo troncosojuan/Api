@@ -22,12 +22,6 @@ public class PeliculaServiceImpl implements com.Alkemy.Disney.Characters.Service
     @Autowired
     private PeliculaSpecification peliculaSpecification;
 
-//    @Autowired
-//    public PeliculaServiceImpl(PeliculaMap peliculaMap, PeliculaRepository peliculaRepository, PeliculaSpecification peliculaSpecification) {
-//        this.peliculaMap = peliculaMap;
-//        this.peliculaRepository = peliculaRepository;
-//        this.peliculaSpecification = peliculaSpecification;
-//    }
 
 
     @Override
@@ -40,11 +34,16 @@ public class PeliculaServiceImpl implements com.Alkemy.Disney.Characters.Service
 
     @Override
     public PeliculaDTO update(PeliculaDTO dto, Long id) {
-        PeliculaEntity entity = peliculaMap.peliculaDTO2Entity(dto);
-        entity.setId(id);
-        peliculaRepository.save(entity);
-        dto.setId(id);
-        return dto;
+        PeliculaDTO peliculaDTO;
+        if (search(id)) {
+            PeliculaEntity peliculaEntity = peliculaMap.peliculaActualizadaDTO2Entity(dto, id);
+            PeliculaEntity peliculaActualizada = peliculaRepository.save(peliculaEntity);
+            peliculaDTO = peliculaMap.peliculaEntity2DTO(peliculaActualizada, true);
+        } else {
+            peliculaDTO = null;
+        }
+        return peliculaDTO;
+
     }
 
     @Override
@@ -53,15 +52,14 @@ public class PeliculaServiceImpl implements com.Alkemy.Disney.Characters.Service
     }
 
     @Override
-    public PeliculaDTO search(Long id) {
-        PeliculaDTO peliculaDTO;
-        if (!peliculaRepository.existsById(id)) {
-            peliculaDTO = null;
+    public boolean search(Long id) {
+        Boolean existePelicula;
+        if (peliculaRepository.existsById(id)) {
+            existePelicula = true;
         } else {
-            PeliculaEntity peliculaEncontrado = peliculaRepository.findById(id).get();
-            peliculaDTO = peliculaMap.peliculaEntity2DTO(peliculaEncontrado, true);
+            existePelicula = false;
         }
-        return peliculaDTO;
+        return existePelicula;
     }
 
     @Override

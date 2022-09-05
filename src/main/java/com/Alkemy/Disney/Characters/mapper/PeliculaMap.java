@@ -2,6 +2,7 @@ package com.Alkemy.Disney.Characters.mapper;
 
 
 import com.Alkemy.Disney.Characters.Repository.GeneroRepository;
+import com.Alkemy.Disney.Characters.Repository.PeliculaRepository;
 import com.Alkemy.Disney.Characters.Repository.PersonajeRespository;
 import com.Alkemy.Disney.Characters.dto.PeliculaDTO;
 import com.Alkemy.Disney.Characters.dto.PersonajeDTO;
@@ -31,6 +32,8 @@ public class PeliculaMap {
     private PersonajeRespository personajeRespository;
     @Autowired
     private GeneroRepository generoRepository;
+    @Autowired
+    private PeliculaRepository peliculaRepository;
 
 
     public PeliculaEntity peliculaDTO2Entity(PeliculaDTO dto) {
@@ -40,8 +43,10 @@ public class PeliculaMap {
         entity.setFechaCreacion(LocalDate.parse(dto.getFechaCreacion(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         entity.setCalificacion(dto.getCalificacion());
         entity.setGeneroId(dto.getGeneroId());
-        for (PersonajeDTO personaje : dto.getPersonajes()) {
-            entity.agregarPersonaje(personajeMap.personajeDTO2Entity(personaje));
+
+            for (PersonajeDTO personaje : dto.getPersonajes()) {
+                entity.agregarPersonaje(personajeMap.personajeDTO2Entity(personaje));
+
         }
         return entity;
     }
@@ -66,6 +71,8 @@ public class PeliculaMap {
         if (cargarPersonajes) {
             List<PersonajeDTO> personajeDTOList = personajeMap.personajeEntityList2DTOList(pelicula.getPersonajes(), false);
 //            for (PersonajeDTO personajes : personajeDTOList) {
+            System.out.println(personajeDTOList.size());
+            System.out.println(pelicula.getPersonajes());
             dto.setPersonajes(personajeDTOList);
 //            }
         }
@@ -89,6 +96,16 @@ public class PeliculaMap {
             peliculaDTOList.add(peliculaEntity2DTO(entity, cargarPersonajes));
         }
         return peliculaDTOList;
+    }
+
+    public PeliculaEntity peliculaActualizadaDTO2Entity(PeliculaDTO dto, Long id) {
+        PeliculaEntity entity = peliculaRepository.findById(id).get();
+        entity.setImagen(dto.getImagen());
+        entity.setTitulo(dto.getTitulo());
+        entity.setFechaCreacion(LocalDate.parse(dto.getFechaCreacion(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        entity.setCalificacion(dto.getCalificacion());
+        entity.setGeneroId(dto.getGeneroId());
+        return entity;
     }
 }
 

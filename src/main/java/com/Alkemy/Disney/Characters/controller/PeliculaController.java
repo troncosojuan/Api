@@ -1,6 +1,7 @@
 package com.Alkemy.Disney.Characters.controller;
 
 
+import com.Alkemy.Disney.Characters.Repository.PeliculaRepository;
 import com.Alkemy.Disney.Characters.Service.PeliculaServiceImpl;
 import com.Alkemy.Disney.Characters.dto.PeliculaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import java.util.Set;
 public class PeliculaController {
 
     @Autowired
-    public PeliculaServiceImpl peliculaServiceImpl;
+    private PeliculaServiceImpl peliculaServiceImpl;
+    @Autowired
+    private PeliculaRepository peliculaRepository;
 
     @PostMapping
     public ResponseEntity<PeliculaDTO> guardar(@RequestBody PeliculaDTO pelicula) {
@@ -28,11 +31,11 @@ public class PeliculaController {
     public ResponseEntity borrar(@PathVariable("id") Long id) {
         ResponseEntity response = null;
 
-        if (peliculaServiceImpl.search(id) == null) {
-            response = new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else {
+        if (peliculaServiceImpl.search(id)) {
             peliculaServiceImpl.delete(id);
             response = new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            response = new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return response;
     }
@@ -42,11 +45,10 @@ public class PeliculaController {
     public ResponseEntity<PeliculaDTO> actualizar(@RequestBody PeliculaDTO dto, @PathVariable("id") Long id) {
         ResponseEntity response = null;
 
-        if (peliculaServiceImpl.search(id) == null) {
-            response = new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else {
+        if (peliculaServiceImpl.search(id)) {
             response = new ResponseEntity(peliculaServiceImpl.update(dto, id), HttpStatus.OK);
-
+        } else {
+            response = new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return response;
     }
@@ -55,12 +57,10 @@ public class PeliculaController {
     public ResponseEntity<List<PeliculaDTO>> buscarPersonajePorFiltros(
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) Set<Long> idGenero,
-            @RequestParam(required = false) String order
-    ){
+            @RequestParam(required = false, defaultValue = "ASC") String order) {
         List<PeliculaDTO> peliculas = this.peliculaServiceImpl.buscarPorFiltros(titulo, idGenero, order);
         return ResponseEntity.ok(peliculas);
     }
-
 
 
 }

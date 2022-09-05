@@ -27,11 +27,11 @@ public class PersonajeController {
     public ResponseEntity borrar(@PathVariable("id") Long id) {
         ResponseEntity response = null;
 
-        if (personajeServiceImpl.search(id) == null) {
-            response = new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else {
+        if (personajeServiceImpl.search(id)) {
             personajeServiceImpl.delete(id);
             response = new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            response = new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return response;
     }
@@ -40,7 +40,7 @@ public class PersonajeController {
     public ResponseEntity<PersonajeDTO> actualizar(@RequestBody PersonajeDTO dto, @PathVariable("id") Long id) {
         ResponseEntity response = null;
 
-        if (personajeServiceImpl.search(id) == null) {
+        if (personajeServiceImpl.search(id)) {
             response = new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
             response = new ResponseEntity(personajeServiceImpl.update(dto, id), HttpStatus.OK);
@@ -52,11 +52,13 @@ public class PersonajeController {
     @GetMapping
     public ResponseEntity<List<PersonajeDTO>> buscarPersonajePorFiltros(
             @RequestParam(required = false) String nombre,
-            @RequestParam(required = false) int edad,
+            @RequestParam(required = false) Integer edad,
             @RequestParam(required = false) Set<Long> idPelicula
     ){
         List<PersonajeDTO> personajes = this.personajeServiceImpl.buscarPorFiltros(nombre, edad, idPelicula);
         return ResponseEntity.ok(personajes);
     }
+
+
 
 }

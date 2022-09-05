@@ -14,8 +14,8 @@ public interface PersonajeService {
 
     void delete(Long id);
 
-    PersonajeDTO search(Long id);
+    boolean search(Long id);
 
 
-    List<PersonajeDTO> buscarPorFiltros(String nombre, int edad, Set<Long> idPelicula);
+    List<PersonajeDTO> buscarPorFiltros(String nombre, Integer edad, Set<Long> idPelicula);
 }

@@ -8,10 +8,10 @@ import java.util.Set;
 public class PersonajeFiltrosDTO {
 
     private String nombre;
-    private int edad;
+    private Integer edad;
     private Set<Long> idPeliculas;
 
-    public PersonajeFiltrosDTO(String nombre, int edad, Set<Long> idPeliculas) {
+    public PersonajeFiltrosDTO(String nombre, Integer edad, Set<Long> idPeliculas) {
         this.nombre = nombre;
         this.edad = edad;
         this.idPeliculas = idPeliculas;

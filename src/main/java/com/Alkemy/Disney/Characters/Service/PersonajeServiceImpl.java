@@ -34,16 +34,15 @@ public class PersonajeServiceImpl implements com.Alkemy.Disney.Characters.Servic
     //PROPOSITO:
     //Busca en el repositorio una entidad, si no la encuentra devuelve un dto nulo y si la encuentra devuelve un dto con los datos de la entidad
     @Override
-    public PersonajeDTO search(Long id) {
+    public boolean search(Long id) {
 
-        PersonajeDTO personajeDTO;
+        Boolean existePersonaje;
         if (personajeRespository.existsById(id)) {
-            personajeDTO = null;
+            existePersonaje = true;
         } else {
-            PersonajeEntity personajeEncontrado = personajeRespository.findById(id).get();
-            personajeDTO = personajeMap.personajeEntity2DTO(personajeEncontrado, false);
+            existePersonaje = false;
         }
-        return personajeDTO;
+        return existePersonaje;
     }
 
 
@@ -66,7 +65,7 @@ public class PersonajeServiceImpl implements com.Alkemy.Disney.Characters.Servic
     }
 
     @Override
-    public List<PersonajeDTO> buscarPorFiltros(String nombre, int edad, Set<Long> idPeliculas) {
+    public List<PersonajeDTO> buscarPorFiltros(String nombre, Integer edad, Set<Long> idPeliculas) {
         PersonajeFiltrosDTO filtroDTO = new PersonajeFiltrosDTO(nombre, edad, idPeliculas);
         List<PersonajeEntity> entidades = personajeRespository.findAll(personajeSpecification.buscarPorFiltros(filtroDTO));
         List<PersonajeDTO> dtos = personajeMap.personajeEntityList2DTOList(entidades, true);
