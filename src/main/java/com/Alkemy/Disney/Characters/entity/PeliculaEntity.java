@@ -1,20 +1,23 @@
 package com.Alkemy.Disney.Characters.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Entity
-@Setter
+@SQLDelete(sql = "UPDATE pelicula SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 @Getter
+@Setter
 @Table(name = "pelicula")
 
-
+@Entity
 public class PeliculaEntity {
 
     //■ Imagen
@@ -27,20 +30,20 @@ public class PeliculaEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    private String imagen;
     private String titulo;
 
     @Column(name = "fecha_creacion")
-    @DateTimeFormat(pattern = "dd/MM/yyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaCreacion;
 
-    private int calificacion;
+    private boolean deleted = Boolean.FALSE;
+
+    private Integer calificacion;
 
 
     //generamos relacion con genero
-    @ManyToOne(fetch = FetchType.EAGER,  cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-    })
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genero_id", insertable = false, updatable = false)
     private GeneroEntity genero;
 
@@ -61,8 +64,17 @@ public class PeliculaEntity {
     private Set<PersonajeEntity> personajes = new HashSet<>();
 
 
+//    private List<Long> listPersonajes = new ArrayList<>();
 
 
+    public void agregarPersonaje(PersonajeEntity personaje) {
+        this.personajes.add(personaje);
+    }
+
+    public void borrarPersonaje(PersonajeEntity personaje) {
+        this.personajes.remove(personaje);
+        personaje.borrarPelicula(this);
+    }
 
 
 }

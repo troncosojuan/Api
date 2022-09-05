@@ -1,0 +1,18 @@
+a la hora de guardar un una pelicula en el personaje, previamente la tengo que crear?
+problemas a la hora de crear los metodos del service.
+como guardo una pelicula en un personaje
+
+
+tema delete, hard delete y soft delete.
+pasar a soft delete
+
+¿tod lo que ingrese como parametro del postman ingresa como string?
+
+
+
+bicondicionalidad a la hora de aplicar los filtros.
+
+
+Que clase importo de set para traerme el parametro
+
+diferencia entre collection, set y list
