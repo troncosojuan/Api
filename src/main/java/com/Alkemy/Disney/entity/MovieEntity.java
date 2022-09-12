@@ -62,10 +62,6 @@ public class MovieEntity {
             inverseJoinColumns = @JoinColumn(name = "personaje_id"))
     private Set<CharacterEntity> personajes = new HashSet<>();
 
-
-//    private List<Long> listPersonajes = new ArrayList<>();
-
-
     public void agregarPersonaje(CharacterEntity personaje) {
         this.personajes.add(personaje);
     }

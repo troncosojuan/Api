@@ -1,4 +1,4 @@
-package com.Alkemy.Disney.Service.impl;
+package com.Alkemy.Disney.service;
 
 import com.Alkemy.Disney.dto.GenderDTO;
 

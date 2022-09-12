@@ -1,4 +1,4 @@
-package com.Alkemy.Disney.Repository;
+package com.Alkemy.Disney.repository;
 
 
 import com.Alkemy.Disney.entity.GenderEntity;

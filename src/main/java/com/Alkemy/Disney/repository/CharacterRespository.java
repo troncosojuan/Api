@@ -1,4 +1,4 @@
-package com.Alkemy.Disney.Repository;
+package com.Alkemy.Disney.repository;
 
 import com.Alkemy.Disney.entity.CharacterEntity;
 import org.springframework.data.jpa.domain.Specification;

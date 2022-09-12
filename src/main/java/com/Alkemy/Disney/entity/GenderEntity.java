@@ -14,11 +14,6 @@ import javax.persistence.*;
 
 public class GenderEntity {
 
-    //■ Nombre
-    //■ Imagen
-    //■ Películas o series asociadas
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;

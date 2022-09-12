@@ -1,4 +1,4 @@
-package com.Alkemy.Disney.Repository.specifications;
+package com.Alkemy.Disney.repository.specifications;
 
 import com.Alkemy.Disney.dto.MovieFiltersDTO;
 import com.Alkemy.Disney.entity.GenderEntity;

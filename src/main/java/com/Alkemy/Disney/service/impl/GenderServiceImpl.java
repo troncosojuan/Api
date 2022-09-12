@@ -1,11 +1,11 @@
-package com.Alkemy.Disney.Service;
+package com.Alkemy.Disney.service.impl;
 
 
-import com.Alkemy.Disney.Repository.GenderRepository;
-import com.Alkemy.Disney.Service.impl.GenderService;
 import com.Alkemy.Disney.dto.GenderDTO;
 import com.Alkemy.Disney.entity.GenderEntity;
 import com.Alkemy.Disney.mapper.GenderMap;
+import com.Alkemy.Disney.repository.GenderRepository;
+import com.Alkemy.Disney.service.GenderService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,6 @@ public class GenderServiceImpl implements GenderService {
     private GenderRepository genderRepository;
 
 
-    //PROPOSITO:Guarda una entidad en el repositorio
-    //Parametro: dto
-    //Salida: dto
     public GenderDTO save(GenderDTO dto) {
         GenderEntity entity = genderMap.genderDTO2Entity(dto);
         GenderEntity entitySaved = genderRepository.save(entity);
@@ -33,8 +30,7 @@ public class GenderServiceImpl implements GenderService {
         return GenderDTO;
     }
 
-    //PROPOSITO: muestra una lista con todos los generos, devuelve una lista
-    //Salida: lista dto
+
     @Override
     public List<GenderDTO> allGeneros() {
         List<GenderEntity> entity = genderRepository.findAll();

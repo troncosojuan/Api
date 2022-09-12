@@ -1,12 +1,13 @@
 package com.Alkemy.Disney.mapper;
 
 
-import com.Alkemy.Disney.Repository.CharacterRespository;
-import com.Alkemy.Disney.Repository.GenderRepository;
-import com.Alkemy.Disney.Repository.MovieRepository;
 import com.Alkemy.Disney.dto.CharacterDTO;
 import com.Alkemy.Disney.dto.MovieDTO;
+import com.Alkemy.Disney.dto.MovieDTOBasic;
 import com.Alkemy.Disney.entity.MovieEntity;
+import com.Alkemy.Disney.repository.CharacterRespository;
+import com.Alkemy.Disney.repository.GenderRepository;
+import com.Alkemy.Disney.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -63,10 +64,8 @@ public class MovieMap {
         dto.setGeneroId(pelicula.getGeneroId());
         if (cargarPersonajes) {
             List<CharacterDTO> characterDTOList = characterMap.characterEntityCollection2DTOList(pelicula.getPersonajes(), false);
-
             dto.setPersonajes(characterDTOList);
         }
-
         return dto;
     }
 
@@ -88,6 +87,22 @@ public class MovieMap {
         entity.setCalificacion(dto.getCalificacion());
         entity.setGeneroId(dto.getGeneroId());
         return entity;
+    }
+
+    public List<MovieDTOBasic> movieEntityCollection2BasicDTOList(List<MovieEntity> entities) {
+        List<MovieDTOBasic> movieDTOBasics = new ArrayList<>();
+        for (MovieEntity entity : entities) {
+            movieDTOBasics.add(movieEntity2DTOBasic(entity));
+        }
+        return movieDTOBasics;
+    }
+
+    private MovieDTOBasic movieEntity2DTOBasic(MovieEntity entity) {
+        MovieDTOBasic dtoBasic = new MovieDTOBasic();
+        dtoBasic.setImagen(entity.getImagen());
+        dtoBasic.setTitulo(entity.getTitulo());
+        dtoBasic.setFechaCreacion(DateTimeFormatter.ofPattern("dd/MM/yyyy").format(entity.getFechaCreacion()));
+        return dtoBasic;
     }
 }
 
