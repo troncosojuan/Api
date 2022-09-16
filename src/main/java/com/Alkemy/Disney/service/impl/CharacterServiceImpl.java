@@ -34,7 +34,7 @@ public class CharacterServiceImpl implements CharacterService {
 
 
     @Override
-    public CharacterDTO update(CharacterDTO dto, Long id) {
+    public CharacterDTO update(CharacterDTO dto, Long id) throws ParamNotFound {
         CharacterDTO characterDTO;
         if (characterRespository.existsById(id)) {
             CharacterEntity characterEntity = characterMap.characterUpdatedDTO2Entity(dto, id);
@@ -47,7 +47,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
 
-    public void delete(Long id) {
+    public void delete(Long id) throws ParamNotFound {
         if (characterRespository.existsById(id)) {
             characterRespository.deleteById(id);
         } else {

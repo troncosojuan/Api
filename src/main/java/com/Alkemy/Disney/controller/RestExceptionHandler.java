@@ -2,9 +2,11 @@ package com.Alkemy.Disney.controller;
 
 import com.Alkemy.Disney.dto.ApiErrorDTO;
 import com.Alkemy.Disney.exception.ParamNotFound;
+import com.Alkemy.Disney.exception.RepeatedUsername;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,7 +32,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-
+    @ExceptionHandler(value = {RepeatedUsername.class})
+    protected ResponseEntity<Object> handleRepeatedUsername(RuntimeException ex, WebRequest request){
+        ApiErrorDTO errorDTO = new ApiErrorDTO(
+                HttpStatus.IM_USED,
+                ex.getMessage(),
+                Arrays.asList("Username repetido")
+        );
+        return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.IM_USED, request);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
