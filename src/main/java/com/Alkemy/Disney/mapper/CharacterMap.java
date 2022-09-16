@@ -28,7 +28,6 @@ public class CharacterMap {
         entity.setEdad(dto.getEdad());
         entity.setPeso(dto.getPeso());
         entity.setHistoria(dto.getHistoria());
-
         return entity;
     }
 
