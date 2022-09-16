@@ -42,6 +42,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.IM_USED, request);
     }
 
+    @ExceptionHandler(value = {BadCredentialsException.class})
+    protected ResponseEntity<Object> handleErrorUser(RuntimeException ex, WebRequest request){
+        ApiErrorDTO errorDTO = new ApiErrorDTO(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                Arrays.asList("Username or pass incorrect")
+        );
+        return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
